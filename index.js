@@ -15,12 +15,29 @@ const path = require('path')
 //Aqui você está fazendo uma variavel para não ter que ficar colocando o nome da variavel toda vez agilizando o processo.
 const caminho = path.join(__dirname, "views")
 
-//Abre a pagina de home do html pet get
+// Importações
+// Importar as rotas de usuario
+const userRoutes =  require("./routes/userRoutes")
+
+// Interpretador de json, para tratar as informações do body.
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+
+// Cria uma rota principal para as sub rotas do usuário
+app.use("/usuarios", userRoutes)
+
+// Definindo o ejs como templete engine.
+app.set('view engine', 'ejs')
+
+// Defindo 'atalho onde busca as views.
+app.set("views", path.join(__dirname, "views"))
+
+//Abre a pagina de home do html pet get.
 app.get("/home", (req,res) => {
     res.status(200)
-    res.sendFile(`${caminho}/index.html`)
+    // Render = ele lê o texto, e traduz para que aparessa na tela.
+    res.render("index")
 })
-
 
 //Um pokemom que eu escolhi vai aparecer na tela.
 app.get("/pokemom", (req,res) => {
@@ -30,9 +47,8 @@ app.get("/pokemom", (req,res) => {
 //Abre a parte de erro caso algo dê errado usando o use
 app.use((req,res) => {
    res.status(404)
-   res.sendFile(`${caminho}/404.html`)
+   res.render("404")
 })
-
 
 //Você esta fazendo um requirimento e uma resposta.
 app.get("/", (req,res) => {
