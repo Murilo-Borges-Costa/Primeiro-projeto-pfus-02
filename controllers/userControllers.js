@@ -25,5 +25,67 @@ module.exports = {
         else{
             res.json({mensagem: "Login realizado"})
         }
+    },
+
+// CRUD
+// Responde a requisição mostrando a vizualisação da tela de cadastro.
+    formCadastro: (req,res) => {
+        res.render("Cadastro")
+    },
+
+    salvarUsuario: (req,res) => {
+        const {usuario, email, senha} = req.body
+        userModel.salvar({usuario, email, senha})
+        res.render("cadastroConfirmado")
+    },
+
+    // Função para mostrar todos os usuarios.
+    listarUsuarios: (req,res) => {
+        const usuarios = userModel.listarTodos();
+        res.json(usuarios);
+       // res.render("usuarios", {usuarios})
+    },
+
+    // Função para mostrar apenas um usuário.
+    buscarUsuario: (req,res) => {
+        // Busca o id vindo de um url como parametro .
+        const id = req.params.id
+        // Guarda o usuario retornado, depois de busca pelo model.
+        const usuario = userModel.buscarPorId(id)
+        // Se não achar, avisa que deu um erro.
+        if(!usuario){
+            return res.status(404).json({mensagem: "Usuário não encontrado."})
+        }
+        // Se achar, devolve as informações via json
+        res.json(usuario)
+    },
+    // Função para atualizar lista de usuários
+    atualizarUsuario: (req,res) => {
+ // Busca o id vindo de um url como parametro .
+    const id = req.params.id
+    // Busca por novas informações para atualizar
+    const {usuario, email, senha} = req.body;
+    // 
+    const usuarioAtualizado = userModel.atualizar(id, {usuario, email, senha})
+
+    // Se não achar avisa que deu erro.
+    if(!usuarioAtualizado){
+        return res.status(404).json({mensage: "Usuario não encontrado."});
     }
-}
+    // Se atualizar manda uma mensagem dizendo que deu certo
+    res.json({mensage: "Usuario atualizado"})
+    },
+    // Função para deletar um usuário
+    deletarUsuario: (req,res) => {
+    // Busca o id vindo da url como parametro
+    const id = req.params.id;
+// Guarda o usuario deletado em uma variavel
+    const deletado = userModel.deletar(id);
+// Se não achar avisa que deu erro
+    if(!deletado) {
+        return res.status(404).json({mensagem: "Usuario não encontrado."});
+    }
+    // Se atualizar, manda uma mensagem dizendo que deu certo.
+    res.json({mensagem: "Usuario foi deletado."});
+    },
+};
