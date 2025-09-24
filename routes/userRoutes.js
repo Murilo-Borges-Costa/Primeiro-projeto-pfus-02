@@ -1,8 +1,8 @@
 //  Importação do model express Estou pegando o Express que baixei e pegando ele.
 const express = require("express")
 
-// Router = configurando os indereços quenos queremos.
-// Criando uma variavel ara gerenciar as rotas de usuario.
+// Router = configurando os indereços que nos queremos.
+// Criando uma variavel para gerenciar as rotas de usuario.
 const roteador = express.Router()
 
 // Importando tudo que tem no arquivo de controller do usuário

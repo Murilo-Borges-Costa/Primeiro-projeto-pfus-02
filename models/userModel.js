@@ -1,5 +1,4 @@
 // Importar o json para servir como banco de dados.
-const { listarUsuario } = require("../controllers/userControllers")
 const db = require("../data/db.json")
 
 // Variável para armazenar os usuários vindos de db

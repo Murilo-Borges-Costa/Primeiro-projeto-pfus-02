@@ -18,5 +18,28 @@
             "email": "murilo001@gmail.com",
             "senha": "6"
         }
+    ],
+    "produtos" : [
+        {
+            "id": 4,
+            "nome": "x-tudo",
+            "descricao": "comida boa",
+            "preco": 4,
+            "quantidade": 5
+        },
+        {
+            "id": 5,
+            "nome": "x-tudo bom",
+            "descricao": "comida muito boa",
+            "preco": 10,
+            "quantidade": 15
+        },
+        {
+            "id": 6,
+            "nome": "x-tudo bob",
+            "descricao": "comida bob",
+            "preco": 32,
+            "quantidade": 12
+        }
     ]
 }

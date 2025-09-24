@@ -18,6 +18,8 @@ const caminho = path.join(__dirname, "views")
 // Importações
 // Importar as rotas de usuario
 const userRoutes =  require("./routes/userRoutes")
+// Importar as rotas de produtos
+const produtoRoutes = require("./routes/produtoRoutes")
 
 // Interpretador de json, para tratar as informações do body.
 app.use(express.urlencoded({extended:true}))
@@ -25,6 +27,9 @@ app.use(express.json())
 
 // Cria uma rota principal para as sub rotas do usuário
 app.use("/usuarios", userRoutes)
+
+// Cria uma rota principal para as sub rotas do produto
+app.use("/produtos", produtoRoutes)
 
 // Definindo o ejs como templete engine.
 app.set('view engine', 'ejs')
@@ -40,9 +45,9 @@ app.get("/home", (req,res) => {
 })
 
 //Um pokemom que eu escolhi vai aparecer na tela.
-app.get("/pokemom", (req,res) => {
-    res.status(200).send("Pikachu.")
-})
+//app.get("/pokemom", (req,res) => {
+  //  res.status(200).send("Pikachu.")
+//})
 
 //Abre a parte de erro caso algo dê errado usando o use
 app.use((req,res) => {
