@@ -41,7 +41,7 @@ app.set("views", path.join(__dirname, "views"))
 app.get("/home", (req,res) => {
     res.status(200)
     // Render = ele lê o texto, e traduz para que aparessa na tela.
-    res.render("index")
+    res.render("index", { titulo: "Página inicial"})
 })
 
 //Um pokemom que eu escolhi vai aparecer na tela.
@@ -49,15 +49,15 @@ app.get("/home", (req,res) => {
   //  res.status(200).send("Pikachu.")
 //})
 
+//Você esta fazendo um requirimento e uma resposta.
+app.get("/", (req,res) => {
+    res.status(200).render("index", { titulo: "Página inicial"})
+})
+
 //Abre a parte de erro caso algo dê errado usando o use
 app.use((req,res) => {
    res.status(404)
-   res.render("404")
-})
-
-//Você esta fazendo um requirimento e uma resposta.
-app.get("/", (req,res) => {
-    res.status(200).send("Olá, parabéns por consegui.")
+   res.render("404", { titulo: "Página de erro"})
 })
 
 //Esse é o servidor funcionando.
