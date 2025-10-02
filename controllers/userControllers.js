@@ -7,7 +7,7 @@ const userModel = require("../models/userModel")
 module.exports = {
     // Responde a requisição mostrando a visualização da tela de login.
     formlogin : (req, res) => {
-        res.render("login")
+        res.render("login", {titulo: "login"});
     },
 
     // Função para levar os dados preenchidos para o model realizar o login.
@@ -15,15 +15,19 @@ module.exports = {
         // Cria um objeto co as informações do body, retirados dos inputs.
         const { email, senha } = req.body
         // Manda as informações do objeto para o model.
-        const logado = usermodel.login(email, senha)
+        const logado = userModel.login(email, senha)
 
         // Se não conseguiu logar, manda uma mensagem de erro.
         if(!logado){
-            return res.status(401).json({mensagem: "Usuário ou senha inválidos"})
+            res.status(401)
+            res.render("login", {titulo: "Login errado", erro:"Email ou senha inválidos"})
+            //return res.status(401).json({mensagem: "Usuário ou senha inválidos"})
         }
         // Se conseguiu manda uma mensagem de confirmação.
         else{
-            res.json({mensagem: "Login realizado"})
+            res.status(200)
+            res.render("index", {titulo: "Bem vindo", usuario: logado.nome})
+           // res.json({mensagem: "Login realizado"})
         }
     },
 
