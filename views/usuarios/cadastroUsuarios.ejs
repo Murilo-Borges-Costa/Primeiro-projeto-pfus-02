@@ -1,0 +1,56 @@
+<!-- Cabeçalho Principal -->
+<%- include('../partials/header') %>
+
+    <!-- Conteudo do index -->
+    <main class="container d-flex flex-column flex-fill justify-content-center">
+        <h1 class="text-center">Cadastro Usuarios</h1>
+
+        <!-- Criando o formulário para envio das informações -->
+        <form action="/usuarios/cadastrar" method="POST">
+            <div class="mb-3">
+                <!-- Caixinha de nome de usuário -->
+                <label for="inputNome" class="form-label fs-2 mt-2">
+                    Nome de usuário
+                </label>
+                <input type="text" id="inputNome" class="form-control form-control-lg"
+                    placeholder="Digite o nome de usuario" name="usuario" required />
+                <!-- Fim da caixinha nome de usuário -->
+
+                <!-- Caixinha de email de usuário -->
+                <label for="inputEmail" class="form-label fs-2 mt-2">
+                    Email
+                </label>
+                <input type="email" id="inputEmail" class="form-control form-control-lg"
+                    placeholder="Digite o email do usuario" name="email" required />
+                <!-- Fim da caixinha de email de usuário -->
+
+                <!-- Caixinha de senha de usuário -->
+                <label for="inputSenha" class="form-label fs-2 mt-2">
+                    Senha
+                </label>
+                <input type="password" id="inputSenha" class="form-control form-control-lg"
+                    placeholder="Digite a senha do usuario" name="senha" required />
+                <!-- Fim da caixinha senha de usuário -->
+
+                <!-- Caixinha de tipo de usuário -->
+                <label class="form-label fs-2 mt-2">
+                    Tipo de usuário
+                </label>
+                <select name="tipo" class="form-select form-select-lg mb-3">
+                    <option value="Funcionário">Funcionário</option>
+                    <option value="Gerente">Gerente</option>
+                    <option value="Administrador">Administrador</option>
+                </select>
+                <!-- Fim da caixinha tipo de usuário -->
+
+                <!-- Botão para envio do formulário -->
+                 <button type="submit" class="btn btn-lg btn-primary">
+                    Cadastrar
+                 </button>
+                <!-- Fim do botão para envio do formulário -->
+            </div>
+        </form>
+    </main>
+
+    <!-- Rodape de todas as páginas -->
+    <%- include('../partials/footer') %>

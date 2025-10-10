@@ -8,13 +8,17 @@ module.exports = {
     // CRUD
     // Responde a requisição mostrando a vizualisação da tela de cadastro.
         formCadastro: (req,res) => {
-            res.render("cadastropro")
+           res.render("produtos/cadastroProdutos", {titulo: "Cadastro"})
         },
     
         salvarProduto: (req,res) => {
-            const {nome, descricao, preco, quantidade} = req.body
-            produtoModel.salvar({nome, descricao, preco, quantidade})
-            res.render("cadastroConfirmado")
+            const {nome, descricao, preco, quantidade, categoria, url} = req.body
+            produtoNovo = produtoModel.salvar({nome, descricao, preco, quantidade, categoria, url})
+             res.render("produtos/confirmacaoProdutos", {
+            tipo: "cadastro",
+            titulo: "Cadastro confirmado",
+            produtoNovo
+        })
         },
     
         // Função para mostrar todos os usuarios.
@@ -42,9 +46,9 @@ module.exports = {
      // Busca o id vindo de um url como parametro .
         const id = req.params.id
         // Busca por novas informações para atualizar
-        const {nome, descricao, preco, quantidade} = req.body;
+        const {name, descricao, preco, quantidade} = req.body;
         // 
-        const produtoAtualizado = produtoModel.atualizar(id, {nome, descricao, preco, quantidade})
+        const produtoAtualizado = produtoModel.atualizar(id, {name, descricao, preco, quantidade})
     
         // Se não achar avisa que deu erro.
         if(!produtoAtualizado){

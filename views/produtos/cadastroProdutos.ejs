@@ -1,0 +1,88 @@
+<!-- Cabeçalho Principal -->
+<%- include('../partials/header') %>
+
+    <!-- Conteudo do index -->
+    <main class="container d-flex flex-column flex-fill justify-content-center">
+        <h1 class="text-center">Cadastro do Produto "TEM QUE CONSERTAR O NOME"</h1>
+
+        <!-- Criando o formulário para envio das informações -->
+        <form action="/produtos/cadastrar" method="POST">
+            <div class="mb-3">
+                <!-- Caixinha de nome de produto -->
+                <label for="inputNome" class="form-label fs-2 mt-2">
+                    Nome do produto
+                </label>
+                <input type="text" id="inputNome" class="form-control form-control-lg"
+                    placeholder="Digite o nome do produto" name="nome" required />
+                <!-- Fim da caixinha nome de produto -->
+
+                <!-- Caixinha de descrição de produto -->
+                <label for="inputDescricao" class="form-label fs-2 mt-2">
+                    Descrição
+                </label>
+                <input type="descricao" id="inputDescricao" class="form-control form-control-lg"
+                    placeholder="Digite a descrição do produto" name="descricao" required />
+                <!-- Fim da caixinha de descrição de produto -->
+
+                <!-- Caixinha de tipo de produto categoria -->
+
+                <!-- CATEGORIA e IMAGEM lado a lado -->
+
+                <div class="row g-3"> <!-- Linha com espaçamento entre colunas -->
+
+                    <!-- Coluna: Categoria -->
+                    <div class="col-md-6">
+                        <label for="selectOpcoes" class="form-label fs-2 mt-2">Categoria de Produto</label>
+                        <select id="selectOpcoes" class="form-select form-select-lg mb-3" name="categoria">
+                            <option value="Alimento">Alimento</option>
+                            <option value="Bebida">Bebida</option>
+                            <option value="Eletronicos">Eletrônicos</option>
+                        </select>
+                    </div>
+
+                    <!-- Coluna: Imagem -->
+                    <div class="col-md-6">
+                        <label for="inputImagem" class="form-label fs-2 mt-2">Imagem de Produto</label>
+                        <input type="text" id="inputImagem" class="form-control form-control-lg"
+                            placeholder="Digite a URL da imagem" name="url" />
+                    </div>
+                </div>
+            </div>
+            <!-- Fim da linha de Categoria e Imagem -->
+
+            <div class="row g-3">
+
+            <!-- Coluna: Categoria -->
+             <!-- Caixinha de preço de produto -->
+                    <div class="col-md-6">
+                <label for="inputPreco" class="form-label fs-2 mt-2">Preço</label>
+                <input type="number" class="form-control form-control-lg" id="inputPreco" placeholder="Digite aqui" name="preco">
+<!-- Fim da caixinha preço de produto -->
+
+ <!-- Caixinha de quantidade de produto -->
+                <label for="inputQuantidade" class="form-label fs-2 mt-2">Quantidade</label>
+                <input type="number" class="form-control form-control-lg" id="inputQuantidade"
+                    placeholder="Digite a " name="quantidade">
+            </div>
+<!-- Fim da caixinha quantidade de produto -->
+
+<!-- Caixinha de foto de produto -->
+            <div class="col-md-6">
+                 <div class="text-center">
+                <img src="https://tse2.mm.bing.net/th/id/OIP.u8duwzMYvdOUphELykPMHQHaEK?rs=1&pid=ImgDetMain&o=7&rm=3"
+                    class="rounded" alt="">
+            </div>
+            </div>
+            <!-- Fim da caixinha foto de produto -->
+            </div>
+
+            <!-- Botão para envio do formulário -->
+            <button type="submit" class="btn btn-lg btn-primary">
+                Cadastrar
+            </button>
+            </div>
+        </form>
+    </main>
+
+    <!-- Rodape de todas as páginas -->
+    <%- include('../partials/footer') %>

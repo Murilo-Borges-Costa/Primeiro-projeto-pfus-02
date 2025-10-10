@@ -11,9 +11,9 @@ const produtoController = require ("../controllers/produtoController")
 // CRUD.
 // C= Criar novo usúario
 // Rota para solicitar a página de cadastro
-roteador.get("/cadastro", produtoController.formCadastro)
+roteador.get("/cadastrar", produtoController.formCadastro)
 // Rota para enviar dados de cadastro
-roteador.post("/cadastro", produtoController.salvarProduto)
+roteador.post("/cadastrar", produtoController.salvarProduto)
 
 // R= Ler usuário
 // Retorna as informações de todos os produtos
