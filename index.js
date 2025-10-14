@@ -37,6 +37,8 @@ app.set('view engine', 'ejs')
 // Defindo 'atalho onde busca as views.
 app.set("views", path.join(__dirname, "views"))
 
+app.use(express.static('public'))
+
 //Abre a pagina de home do html pet get.
 app.get("/home", (req,res) => {
     res.status(200)
