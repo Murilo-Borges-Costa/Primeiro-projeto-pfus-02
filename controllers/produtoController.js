@@ -23,8 +23,10 @@ module.exports = {
     
         // Função para mostrar todos os usuarios.
         listarProduto: (req,res) => {
+            // Guarda a lista de usuários, que o model mandou depois que buscou do banco
             const produto = produtoModel.listarTodos();
-            res.json(produto);
+            // Mostra a tela de lista pra pessoa, mandando a váriavel como parametro
+        res.render("produtos/listaProduto", {produto, titulo: "Lista de produtos"});
            // res.render("usuarios", {usuarios})
         },
     
