@@ -25,6 +25,7 @@ module.exports = {
         listarProduto: (req,res) => {
             // Guarda a lista de usuários, que o model mandou depois que buscou do banco
             const produto = produtoModel.listarTodos();
+            
             // Mostra a tela de lista pra pessoa, mandando a váriavel como parametro
         res.render("produtos/listaProduto", {produto, titulo: "Lista de produtos"});
            // res.render("usuarios", {usuarios})
