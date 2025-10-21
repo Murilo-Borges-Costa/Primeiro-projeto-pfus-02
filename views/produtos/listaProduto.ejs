@@ -12,66 +12,60 @@
         </a>
 
         <!-- card text-bg-dark mb-3 -->
-        <div class="d-flex flex-row flex-wrap gap-3">
+        <div class="d-flex flex-row flex-wrap gap-3 mt-3">
 
             <!-- Criando a tabela de acordo com a lista de usuários -->
-            <% if (produto && produto.length > 0) { %>
-            <% produto.forEach((produto) => {%>
-                <div class="card text-bg-dark mb-3" style="width: 18rem;" <%= produto.id %>>
-                    
-                    <img src="<%= produto.url %>"
-                        class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                           <p style="color: aliceblue;">Nome</p>
-                            <%= produto.nome %>
-                        </h5>
-                        <p class="card-text">
-                             <p style="color: aliceblue">Descricao</p>
-                            <%= produto.descricao %>
-                        </p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                             <p>Preço</p>
-                            <%= produto.preco%>
-                        </li>
-                        <li class="list-group-item">
-                             <p>Quantidade</p>
-                            <%= produto.quantidade%>
-                        </li>
-                        <li class="list-group-item">
-                             <p>Tipo</p>
-                            <%=produto.tipo%>
-                        </li>
-                    </ul>
-                    <div class="card-body">
-                        <!-- Botão de editar -->
-                        <a href="/produto<%= produto.id %>">
-                            <button class="btn btn-sm btn-warning me-2">
-                                <i class="bi bi-pencil-square"></i>
-                                Editar
-                            </button>
-                        </a>
+            <% if (produto && produto.length> 0) { %>
+                <% produto.forEach((produto)=> {%>
+                    <div class="card text-bg-dark mb-3" style="width: 18rem;" <%=produto.id %>>
+
+                        <img src="<%= produto.url %>" class="card-img-top" alt="" white="500px" height="200px">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: aliceblue;">
+                                <%= produto.nome %>
+                            </h5>
+                            <p class="card-text"><strong>Descrição: </strong><%= produto.descricao %></p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <p><strong>Preço: </strong> <%= produto.preco%> </p>
+
+                            </li>
+                            <li class="list-group-item">
+                                <p><strong>Quantidade: </strong><%= produto.quantidade%> </p>
+                            </li>
+                            <li class="list-group-item">
+                                <p><strong>Tipo: </strong><%=produto.tipo%> </p>
+                            </li>
+                        </ul>
+                        <div class="card-body">
+                            <!-- Botão de editar -->
+                            <a href="/produto<%= produto.id %>">
+                                <button class="btn btn-sm btn-warning me-2">
+                                    <i class="bi bi-pencil-square"></i>
+                                    Editar
+                                </button>
+                            </a>
 
 
-                        <!-- Botão de excluir -->
-                        <a href="#">
-                            <button class="btn btn-sm btn-danger me-2"
-                                onclick="confirmaExclusao('<%= produto.produto%>', '<%= produto.id%>')">
-                                <i class="bi bi-pencil-square"></i>
-                                Excluir
-                            </button>
+                            <!-- Botão de excluir -->
+                            <a href="#">
+                                <button class="btn btn-sm btn-danger me-2"
+                                    onclick="confirmaExclusao('<%= produto.produto%>', '<%= produto.id%>')">
+                                    <i class="bi bi-pencil-square"></i>
+                                    Excluir
+                                </button>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <% }) %>
+                    <% }) %>
 
-                <% } else { %>
-                    <!-- Mostra uma mensagem caso não tenha nenhum produto cadastrado -->
-                    <div class="alert alert-warning text-center mt-5">
-                        Nenhum produto cadastrado no momento.
-                    </div>
-                    <% } %>
+                        <% } else { %>
+                            <!-- Mostra uma mensagem caso não tenha nenhum produto cadastrado -->
+                            <div class="alert alert-warning text-center mt-5">
+                                Nenhum produto cadastrado no momento.
+                            </div>
+                            <% } %>
         </div>
 
         <!-- Criação do script para função de deletar -->
