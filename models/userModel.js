@@ -38,7 +38,7 @@ module.exports = {
         return listaUsuarios.find((user) => user.id == id || null)
     },
 
-    atualizar: (id, {usuario, email, senha}) => {
+    atualizar: (id, {usuario, email, senha, tipo}) => {
         // Busca na lista de usuarios, um usuario com aquele id especifico, se achar, pega o index dele e guarda na variavel index
         const index = listaUsuarios.findIndex((user) => user.id == id)
 
@@ -46,9 +46,10 @@ module.exports = {
         if(index === -1) return null;
         listaUsuarios[index] = {
             ...listaUsuarios[index],
-            listaUsuarios: usuario || listaUsuarios[index].usuario,
-            listaUsuarios: email || listaUsuarios[index].usuario,
-            listaUsuarios: senha || listaUsuarios[index].usuario,
+            usuario: usuario || listaUsuarios[index].usuario,
+            email: email || listaUsuarios[index].email,
+            senha: senha || listaUsuarios[index].senha,
+            tipo: tipo || listaUsuarios[index].tipo,
         };
         // Retornar o usuario atualizado
         return listaUsuarios[index]

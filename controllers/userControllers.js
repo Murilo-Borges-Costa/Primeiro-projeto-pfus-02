@@ -64,26 +64,26 @@ module.exports = {
         const usuario = userModel.buscarPorId(id)
         // Se não achar, avisa que deu um erro.
         if(!usuario){
-            return res.status(404).json({mensagem: "Usuário não encontrado."})
+            return res.status(404).render("usuarios/erroUsuario", {titulo: "Usuário não encontrado"})
         }
         // Se achar, devolve as informações via json
-        res.json(usuario)
+        res.render("usuarios/editarUsuarios", {titulo: "Editar", usuario})
     },
     // Função para atualizar lista de usuários
     atualizarUsuario: (req,res) => {
  // Busca o id vindo de um url como parametro .
     const id = req.params.id
     // Busca por novas informações para atualizar
-    const {usuario, email, senha} = req.body;
+    const {usuario, email, senha, tipo} = req.body;
     // 
-    const usuarioAtualizado = userModel.atualizar(id, {usuario, email, senha})
+    const usuarioAtualizado = userModel.atualizar(id, {usuario, email, senha, tipo})
 
     // Se não achar avisa que deu erro.
     if(!usuarioAtualizado){
-        return res.status(404).json({mensage: "Usuario não encontrado."});
+        return res.status(404).render("usuarios/erroUsuario", {titulo: "Erro", mensagem:"Não foi possivel atualizar"});
     }
     // Se atualizar manda uma mensagem dizendo que deu certo
-    res.json({mensage: "Usuario atualizado"})
+    res.render("usuarios/confirmacaoUsuarios", {titulo:"Edicão confirmada", tipo:"edicao", usuarioAtualizado})
     },
     // Função para deletar um usuário
     deletarUsuario: (req,res) => {

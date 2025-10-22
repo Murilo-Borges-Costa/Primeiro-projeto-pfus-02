@@ -1,4 +1,102 @@
 <%- include('../partials/header') %>
 
+<!-- Conteudo do index -->
+    <main class="container d-flex flex-column flex-fill justify-content-center">
+        <h1 class="text-center">Cadastro do Produto</h1>
+
+        <!-- Criando o formulário para envio das informações -->
+        <form action="/produtos/<%= produto.id %>" method="POST">
+            <div class="mb-3">
+                <!-- Caixinha de nome de produto -->
+                <label for="inputNome" class="form-label fs-2 mt-2">
+                    Nome do produto
+                </label>
+                <input type="text" id="inputNome" class="form-control form-control-lg"
+                    placeholder="Digite o nome do produto" name="nome" required value=<%= produto.nome %>>
+                <!-- Fim da caixinha nome de produto -->
+
+                <!-- Caixinha de descrição de produto -->
+                <label for="inputDescricao" class="form-label fs-2 mt-2">
+                    Descrição
+                </label>
+                <input type="descricao" id="inputDescricao" class="form-control form-control-lg"
+                    placeholder="Digite a descrição do produto" name="descricao" required value=<%= produto.descricao %>>
+                <!-- Fim da caixinha de descrição de produto -->
+
+                <!-- Caixinha de tipo de produto categoria -->
+
+                <!-- CATEGORIA e IMAGEM lado a lado -->
+
+                <div class="row g-3"> <!-- Linha com espaçamento entre colunas -->
+
+                    <!-- Coluna: Categoria -->
+                    <div class="col-md-6">
+                        <label for="selectOpcoes" class="form-label fs-2 mt-2">Categoria de Produto</label>
+                        <select id="selectOpcoes" class="form-select form-select-lg" name="categoria">
+                            <option value="Alimento" <%= produto.tipo === "Alimento" ? "selected" : ""%>>Alimento</option>
+                            <option value="Bebida" <%= produto.tipo === "Bebida" ? "selected" : ""%>>Bebida</option>
+                            <option value="Eletronicos" <%= produto.tipo === "Eletrônicos" ? "selected" : ""%>>Eletrônicos</option>
+                        </select>
+                    </div>
+
+                    <!-- Coluna: Imagem -->
+                    <div class="col-md-6">
+                        <label for="inputImagem" class="form-label fs-2 mt-2">Imagem de Produto</label>
+                        <input type="url" id="inputImagem" class="form-control form-control-lg"
+                            placeholder="Digite a URL da imagem" name="url" required value=<%= produto.url %>>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim da linha de Categoria e Imagem -->
+
+            <div class="row g-3">
+
+                <!-- Coluna: Categoria -->
+                <!-- Caixinha de preço de produto -->
+                <div class="col-md-6">
+                    <label for="inputPreco" class="form-label fs-2 mt-2">Preço</label>
+                    <input type="number" class="form-control form-control-lg" id="inputPreco"
+                        placeholder="Digite o preço" name="preco" value=<%= produto.preco %>>
+                    <!-- Fim da caixinha preço de produto -->
+
+                    <!-- Caixinha de quantidade de produto -->
+                    <label for="inputQuantidade" class="form-label fs-2 mt-2">Quantidade</label>
+                    <input type="number" class="form-control form-control-lg" id="inputQuantidade"
+                        placeholder="Digite a quantidade" name="quantidade" value=<%= produto.quantidade %>>
+                </div>
+                <!-- Fim da caixinha quantidade de produto -->
+
+                <!-- Caixinha de foto de produto -->
+                <div class="col-md-6 text-center">
+                    <img id="previewImagem"
+                        src="https://tse2.mm.bing.net/th/id/OIP.u8duwzMYvdOUphELykPMHQHaEK?rs=1&pid=ImgDetMain&o=7&rm=3"
+                        class="rounded mx-auto d-block mt-2" width="250px" height="250px">
+                </div>
+                <!-- Fim da caixinha foto de produto -->
+            </div>
+
+            <!-- Botão para envio do formulário -->
+            <button type="submit" class="btn btn-lg btn-primary">
+                Editar
+            </button>
+            </div>
+        </form>
+        <!-- Código para imagem ser alterada de acordo com o que a pessoa colocar -->
+        <script>
+            // Variavel para acessar a caixinha de url da imagem
+            const inputImagem = document.getElementById("inputImagem");
+            // Variavel para acessar a imagem
+            const previewImagem = document.getElementById("previewImagem");
+            // Variavel para imagem padrão, caso a pessoa não coloque nada
+            const imagemPadrao = "https://tse2.mm.bing.net/th/id/OIP.u8duwzMYvdOUphELykPMHQHaEK?rs=1&pid=ImgDetMain&o=7&rm=3";
+
+            inputImagem.addEventListener("input", () => {
+
+                const url = inputImagem.value;
+
+                previewImagem.src = url || imagemPadrao;
+            });
+        </script>
+        </main>
 <!-- Rodape de todas as páginas -->
     <%- include('../partials/footer') %>

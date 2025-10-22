@@ -2,21 +2,21 @@
     "usuarios" : [
         {
             "id": 1,
-            "usuarios": "Murilo",
+            "usuario": "Murilo",
             "email": "murilo@gmail.com",
             "tipo": "Administrador",
             "senha": "4"
         },
         {
             "id": 2,
-            "usuarios": "Bem 10",
+            "usuario": "Bem 10",
             "email": "bem10@gmail.com",
             "tipo": "Gerente",
             "senha": "10"
         },
         {
             "id": 3,
-            "usuarios": "Murilo001",
+            "usuario": "Murilo001",
             "email": "murilo001@gmail.com",
             "tipo": "Funcionario",
             "senha": "6"

@@ -39,10 +39,10 @@ module.exports = {
             const produto = produtoModel.buscarPorId(id)
             // Se não achar, avisa que deu um erro.
             if(!produto){
-                return res.status(404).json({mensagem: "Produto não encontrado."})
+                return res.status(404).render("produtos/erroProduto", {titulo: "Produto não encontrado"})
             }
             // Se achar, devolve as informações via json
-            res.json(produto)
+            res.render("Produtos/editarProduto", {titulo: "Editar", produto})
         },
         // Função para atualizar lista de usuários
         atualizarProduto: (req,res) => {
@@ -55,10 +55,10 @@ module.exports = {
     
         // Se não achar avisa que deu erro.
         if(!produtoAtualizado){
-            return res.status(404).json({mensagem: "Produto não encontrado."});
+            return res.status(404).render("produtos/erroProduto", {titulo: "Erro", mensagem:"Não foi possivel atualizar"});
         }
         // Se atualizar manda uma mensagem dizendo que deu certo
-        res.json({mensagem: "Produto atualizado"})
+        res.render("produtos/confirmacaoProdutos", {titulo:"Edicão confirmada", tipo:"edicao", produtoAtualizado})
         },
         // Função para deletar um usuário
         deletarProduto: (req,res) => {

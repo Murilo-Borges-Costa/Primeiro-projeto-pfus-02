@@ -38,12 +38,12 @@ module.exports = {
         if(index === -1) return null;
         listaProduto[index] = {
             ...listaProduto[index],
-            listaProduto: nome || listaProduto[index].nome,
-            listaProduto: descricao || listaProduto[index].descricao,
-            listaProduto: preco || listaProduto[index].preco,
-            listaProduto: quantidade || listaProduto[index].quantidade,
-            listaProduto: categoria || listaProduto[index].categoria,
-            listaProduto: url || listaProduto[index].url,
+            nome: nome || listaProduto[index].nome,
+            descricao: descricao || listaProduto[index].descricao,
+            preco: preco || listaProduto[index].preco,
+            quantidade: quantidade || listaProduto[index].quantidade,
+            categoria: categoria || listaProduto[index].categoria,
+            url: url || listaProduto[index].url,
         };
         // Retornar o usuario atualizado
         return listaProduto[index]
