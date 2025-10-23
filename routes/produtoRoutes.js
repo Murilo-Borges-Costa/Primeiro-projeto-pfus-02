@@ -22,7 +22,7 @@ roteador.get("/", produtoController.listarProduto)
 roteador.get("/:id", produtoController.buscarProduto)
 
 // U= Atualizar um produtos
-roteador.put("/:id", produtoController.atualizarProduto)
+roteador.post("/:id", produtoController.atualizarProduto)
 
 // Salvar
 roteador.post("/", produtoController.salvarProduto)

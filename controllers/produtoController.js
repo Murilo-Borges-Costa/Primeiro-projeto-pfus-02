@@ -49,9 +49,9 @@ module.exports = {
      // Busca o id vindo de um url como parametro .
         const id = req.params.id
         // Busca por novas informações para atualizar
-        const {name, descricao, preco, quantidade} = req.body;
+        const {nome, descricao, preco, quantidade, categoria, url} = req.body;
         // 
-        const produtoAtualizado = produtoModel.atualizar(id, {name, descricao, preco, quantidade})
+        const produtoAtualizado = produtoModel.atualizar(id, {nome, descricao, preco, quantidade, categoria, url})
     
         // Se não achar avisa que deu erro.
         if(!produtoAtualizado){
