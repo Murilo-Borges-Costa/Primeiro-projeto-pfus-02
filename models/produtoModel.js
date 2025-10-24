@@ -54,7 +54,7 @@ module.exports = {
 const index = listaProduto.findIndex((prod) => prod.id == id)
 
         if(index === -1) return false;
-        listaProduto.slice(index, 1);
+        listaProduto.splice(index, 1);
         return true
 },
 }

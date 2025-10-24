@@ -5,45 +5,45 @@ const db = require("../data/db.json")
 let listaUsuarios = db.usuarios
 
 module.exports = {
-// Login
-// Função para válidar o login
-    login : (email, senha) => {
+    // Login
+    // Função para válidar o login
+    login: (email, senha) => {
         // Busca na lista de usuários, se tem aquele usuário com as informações que ele me passou.
         // Find = faz uma busca
-        let logado = listaUsuarios.find( (user) => user.email === email && user.senha === senha) || null
+        let logado = listaUsuarios.find((user) => user.email === email && user.senha === senha) || null
 
         return logado
     },
 
-// CRUD
-// Fumção para cadastrar um novo usuario
-    salvar : ({usuario, email, senha, tipo}) => {
+    // CRUD
+    // Fumção para cadastrar um novo usuario
+    salvar: ({ usuario, email, senha, tipo }) => {
         const novoUsuario = {
             id: listaUsuarios.length + 1,
             usuario,
             email,
-            senha, 
+            senha,
             tipo
         }
         listaUsuarios.push(novoUsuario)
         console.log("Novo usuário salvo: ", novoUsuario);
         return novoUsuario
     },
-// Buscar todos os usuarios do banco
+    // Buscar todos os usuarios do banco
     listarTodos: () => {
         return listaUsuarios
     },
-// Buscar um usuario especifico do banco
+    // Buscar um usuario especifico do banco
     buscarPorId: (id) => {
         return listaUsuarios.find((user) => user.id == id || null)
     },
 
-    atualizar: (id, {usuario, email, senha, tipo}) => {
+    atualizar: (id, { usuario, email, senha, tipo }) => {
         // Busca na lista de usuarios, um usuario com aquele id especifico, se achar, pega o index dele e guarda na variavel index
         const index = listaUsuarios.findIndex((user) => user.id == id)
 
         // Se não achar, significa que um usuario com aquele index não existe
-        if(index === -1) return null;
+        if (index === -1) return null;
         listaUsuarios[index] = {
             ...listaUsuarios[index],
             usuario: usuario || listaUsuarios[index].usuario,
@@ -56,10 +56,9 @@ module.exports = {
     },
 
     deletar: (id) => {
-const index = listaUsuarios.findIndex((user) => user.id == id)
-
-        if(index === -1) return false;
-        listaUsuarios.slice(index, 1);
+        const index = listaUsuarios.findIndex((user) => user.id == id)
+        if (index === -1) return false;
+        listaUsuarios.splice(index, 1);
         return true
     },
 }

@@ -68,9 +68,9 @@ module.exports = {
         const deletado = produtoModel.deletar(id);
     // Se não achar avisa que deu erro
         if(!deletado) {
-            return res.status(404).json({mensagem: "Produto não encontrado."});
+             return res.status(404).render("produtos/erroProduto", {titulo: "Erro", mensagem:"Não foi possivel deletar"});
         }
         // Se atualizar, manda uma mensagem dizendo que deu certo.
-        res.json({mensagem: "Produto foi deletado."});
+         res.render("produtos/confirmacaoProdutos", {titulo:"Deletado", tipo:"deletar", deletado})
         },
 }

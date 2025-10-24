@@ -28,7 +28,7 @@ roteador.post("/:id", produtoController.atualizarProduto)
 roteador.post("/", produtoController.salvarProduto)
 
 // D= Deletar um produtos
-roteador.delete("/:id", produtoController.deletarProduto)
+roteador.get("/deletar/:id", produtoController.deletarProduto)
 
 // Criando a exportação desse arquivo
 module.exports = roteador

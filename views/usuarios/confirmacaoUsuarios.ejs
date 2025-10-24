@@ -3,25 +3,24 @@
 
 <!-- Conteudo do index -->
 <main class="d-flex flex-column flex-fill text-center justify-content-center">
-<h1>Confirmando cadastro Usuarios</h1>
     <div class="w-50 mx-auto align-content-center bg-success" style="height: 300px;">
         <!-- Se a página que chamou for a de cadastro, mostra que o cadastro foi realizado, mostrando o nome do usuário que acabou de ser cadastrado -->
         <% if (tipo == "cadastro") { %>
          <h1 class="text-white">
-            <!-- Pega o nome de quem foi cadastrado, vindo do objeto usuarioNovo -->
-            Cadastro de <%- usuarioNovo.usuario %> realizado
+            <!-- Pega o nome de quem foi cadastrado, vindo do objeto produtoNovo -->
+            Cadastro de <%- usuario.usuario %> realizado
          </h1>
-         <!-- Se a página que chamou for a de edição, mostra que o usuário foi editado -->
+         <!-- Se a página que chamou for a de edição, mostra que o produto foi editado -->
          <% } else if(tipo == "edicao"){ %>
            <h1 class="text-white">
-            <!-- Pega o nome de quem foi cadastrado, vindo do objeto usuarioNovo -->
+            <!-- Pega o nome do produto que foi cadastrado, vindo do objeto produtoNovo -->
             Edição de <%- usuarioAtualizado.usuario %> confirmado
          </h1>
-          <!-- Se a página que chamou for a de deletar, mostra que o usuário foi deletado -->
+          <!-- Se a página que chamou for a de deletar, mostra que o produto foi deletado -->
            <% } else { %>
              <h1 class="text-white">
                  <!-- Pega o nome de quem foi deletado, vindo do objeto deletado -->
-                  Usuário <%- deletado.usuario %> excluido
+                  Usuario <%- deletado.usuario %> excluido
              </h1>
         <% } %>
         <!-- Criando botões para outras páginas -->
