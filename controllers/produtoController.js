@@ -7,70 +7,79 @@ const produtoModel = require("../models/produtoModel")
 module.exports = {
     // CRUD
     // Responde a requisição mostrando a vizualisação da tela de cadastro.
-        formCadastro: (req,res) => {
-           res.render("produtos/cadastroProdutos", {titulo: "Cadastro"})
-        },
-    
-        salvarProduto: (req,res) => {
-            const {nome, descricao, preco, quantidade, categoria, url} = req.body
-            produtoNovo = produtoModel.salvar({nome, descricao, preco, quantidade, categoria, url})
-             res.render("produtos/confirmacaoProdutos", {
-            tipo: "cadastro",
-            titulo: "Cadastro confirmado",
-            produtoNovo
-        })
-        },
-    
-        // Função para mostrar todos os usuarios.
-        listarProduto: (req,res) => {
-            // Guarda a lista de usuários, que o model mandou depois que buscou do banco
-            const produto = produtoModel.listarTodos();
-            
-            // Mostra a tela de lista pra pessoa, mandando a váriavel como parametro
-        res.render("produtos/listaProduto", {produto, titulo: "Lista de produtos"});
-           // res.render("usuarios", {usuarios})
-        },
-    
-        // Função para mostrar apenas um usuário.
-        buscarProduto: (req,res) => {
-            // Busca o id vindo de um url como parametro .
-            const id = req.params.id
-            // Guarda o usuario retornado, depois de busca pelo model.
-            const produto = produtoModel.buscarPorId(id)
-            // Se não achar, avisa que deu um erro.
-            if(!produto){
-                return res.status(404).render("produtos/erroProduto", {titulo: "Produto não encontrado"})
+    formCadastro: (req, res) => {
+        res.render("produtos/cadastroProdutos", { titulo: "Cadastro" })
+    },
+
+    salvarProduto: (req, res) => {
+        const { nome, descricao, preco, quantidade, categoria, url } = req.body
+        produtoModel.salvar({ nome, descricao, preco, quantidade, categoria, url }, (erro, produtoNovo) => {
+            ;
+            // NÃO TENHO CERTEZA SE É PRODUTO OU PRODUTOS e se o p é minusculo ou minusculo.
+            if (erro) {
+                return res.render("produtos/erroProdutos", {
+                    titulo: "erro", erro: "Erro ao salvar produtos",
+                });
             }
-            // Se achar, devolve as informações via json
-            res.render("Produtos/editarProduto", {titulo: "Editar", produto})
-        },
-        // Função para atualizar lista de usuários
-        atualizarProduto: (req,res) => {
-     // Busca o id vindo de um url como parametro .
+
+            res.render("produtos/confirmacaoProdutos", {
+                tipo: "cadastro",
+                titulo: "Cadastro confirmado",
+                produtoNovo
+            });
+        })
+    },
+
+    // Função para mostrar todos os usuarios.
+    listarProduto: (req, res) => {
+        // Guarda a lista de usuários, que o model mandou depois que buscou do banco
+        const produto = produtoModel.listarTodos();
+
+        // Mostra a tela de lista pra pessoa, mandando a váriavel como parametro
+        res.render("produtos/listaProduto", { produto, titulo: "Lista de produtos" });
+        // res.render("usuarios", {usuarios})
+    },
+
+    // Função para mostrar apenas um usuário.
+    buscarProduto: (req, res) => {
+        // Busca o id vindo de um url como parametro .
+        const id = req.params.id
+        // Guarda o usuario retornado, depois de busca pelo model.
+        const produto = produtoModel.buscarPorId(id)
+        // Se não achar, avisa que deu um erro.
+        if (!produto) {
+            return res.status(404).render("produtos/erroProduto", { titulo: "Produto não encontrado" })
+        }
+        // Se achar, devolve as informações via json
+        res.render("Produtos/editarProduto", { titulo: "Editar", produto })
+    },
+    // Função para atualizar lista de usuários
+    atualizarProduto: (req, res) => {
+        // Busca o id vindo de um url como parametro .
         const id = req.params.id
         // Busca por novas informações para atualizar
-        const {nome, descricao, preco, quantidade, categoria, url} = req.body;
+        const { nome, descricao, preco, quantidade, categoria, url } = req.body;
         // 
-        const produtoAtualizado = produtoModel.atualizar(id, {nome, descricao, preco, quantidade, categoria, url})
-    
+        const produtoAtualizado = produtoModel.atualizar(id, { nome, descricao, preco, quantidade, categoria, url })
+
         // Se não achar avisa que deu erro.
-        if(!produtoAtualizado){
-            return res.status(404).render("produtos/erroProduto", {titulo: "Erro", mensagem:"Não foi possivel atualizar"});
+        if (!produtoAtualizado) {
+            return res.status(404).render("produtos/erroProduto", { titulo: "Erro", mensagem: "Não foi possivel atualizar" });
         }
         // Se atualizar manda uma mensagem dizendo que deu certo
-        res.render("produtos/confirmacaoProdutos", {titulo:"Edicão confirmada", tipo:"edicao", produtoAtualizado})
-        },
-        // Função para deletar um usuário
-        deletarProduto: (req,res) => {
+        res.render("produtos/confirmacaoProdutos", { titulo: "Edicão confirmada", tipo: "edicao", produtoAtualizado })
+    },
+    // Função para deletar um usuário
+    deletarProduto: (req, res) => {
         // Busca o id vindo da url como parametro
         const id = req.params.id;
-    // Guarda o usuario deletado em uma variavel
+        // Guarda o usuario deletado em uma variavel
         const deletado = produtoModel.deletar(id);
-    // Se não achar avisa que deu erro
-        if(!deletado) {
-             return res.status(404).render("produtos/erroProduto", {titulo: "Erro", mensagem:"Não foi possivel deletar"});
+        // Se não achar avisa que deu erro
+        if (!deletado) {
+            return res.status(404).render("produtos/erroProduto", { titulo: "Erro", mensagem: "Não foi possivel deletar" });
         }
         // Se atualizar, manda uma mensagem dizendo que deu certo.
-         res.render("produtos/confirmacaoProdutos", {titulo:"Deletado", tipo:"deletar", deletado})
-        },
+        res.render("produtos/confirmacaoProdutos", { titulo: "Deletado", tipo: "deletar", deletado })
+    },
 }

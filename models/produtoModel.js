@@ -1,60 +1,70 @@
-// Importar o json para servir como banco de dados.
-const db = require("../data/db.json")
-
-// Variável para armazenar os usuários vindos de db
-let listaProduto = db.produtos
+// Importa a conexão com o banco de dados
+const conn = require("../config/conexao_banco.js")
 
 module.exports = {
-    // CRUD
-// Fumção para cadastrar um novo produto
-    salvar : ({nome, descricao, preco, quantidade, categoria, url}) => {
-        const novoProduto = {
-            id: listaProduto.length + 1,
-            nome,
-            descricao,
-            preco,
-            quantidade,
-            categoria, 
-            url
-        }
-        listaProduto.push(novoProduto)
-        console.log("Novo usuário salvo: ", novoProduto);
-        return novoProduto
-    },
-// Buscar todos os usuarios do banco
-    listarTodos: () => {
-        return listaProduto
-    },
-// Buscar um usuario especifico do banco
-    buscarPorId: (id) => {
-        return listaProduto.find((prod) => prod.id == id || null)
-    },
 
-    atualizar: (id, {nome, descricao, preco, quantidade, categoria, url}) => {
-        // Busca na lista de usuarios, um usuario com aquele id especifico, se achar, pega o index dele e guarda na variavel index
-        const index = listaProduto.findIndex((prod) => prod.id == id)
+// Criar = CREATE
+salvar: ({ nome, descricao, preco, quantidade, categoria, url }, callback ) => {
+// Variável SQL que guarda a consulta desejada
+const sql = `
+    INSERT INTO produtos (nome, descricao, preco, quantidade, categoria, url)
+    VALUES (?, ?, ?, ?, ?, ?)'
+`
 
-        // Se não achar, significa que um usuario com aquele index não existe
-        if(index === -1) return null;
-        listaProduto[index] = {
-            ...listaProduto[index],
-            nome: nome || listaProduto[index].nome,
-            descricao: descricao || listaProduto[index].descricao,
-            preco: preco || listaProduto[index].preco,
-            quantidade: quantidade || listaProduto[index].quantidade,
-            categoria: categoria || listaProduto[index].categoria,
-            url: url || listaProduto[index].url,
-        };
-        // Retornar o usuario atualizado
-        return listaProduto[index]
-    },
+// Valores que serão utilizados na consulta
+        const valores = [nome, descricao, preco, quantidade, categoria, url]
 
+ // Executar o comando no banco
+ conn.query(sql, valores, (erro, resultado) => {
+if(erro){
+    return callback (erro, null)
+}
+// Objeto com as informações que o usuário inseriu no banco
+const novoProduto = {id: resultado.insertId , nome, descricao, preco, quantidade, categoria, url}
 
-    deletar: (id) => {
-const index = listaProduto.findIndex((prod) => prod.id == id)
-
-        if(index === -1) return false;
-        listaProduto.splice(index, 1);
-        return true
+callback(null, novoProduto)
+ })
 },
+
+// Listar = READ
+listarTodods: (callback) => {
+    // Variável SQL que guarda a consulta desejada
+const sql = `SELECT * FROM produtos`
+
+    // Executar o comando no banco
+conn.query(sql, (erro, resultados) => {
+    if(erro){
+        return callback(erro, null)
+    }
+    callback(null, resultados)
+})
+
+},
+
+// Atualizar = UPTADE
+// Buscar o usário
+buscarPorId: () => {
+
+},
+// Atualizar informações
+atualizar: () => {
+
+},
+// Excluir = DELETAR
+deletar: (id, callback) => {
+// Variável SQL que guarda a consulta desejada
+const sql = `DELETE FROM produtos
+            WHERE id = ?`
+
+// Variavel com  informação oculta
+const valor = [id]
+
+// Executar o comando no banco
+conn.query(sql, valor, (erro, resultado) => {
+ if(erro){
+        return callback(erro, null)
+    }
+    callback(null, resultado.affectedRows > 0)
+})
+}
 }

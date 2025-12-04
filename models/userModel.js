@@ -1,68 +1,93 @@
-// Importar o json para servir como banco de dados.
-const db = require("../data/db.json")
-
-// Variável para armazenar os usuários vindos de db
-let listaUsuarios = db.usuarios
-
-// Área nova com conexão ao Banco de Dados
-// Variável que importa a conexão com o banco de dados
-const conn = require("../config/conexao_banco")
+// Importa a conexão com o banco de dados
+const conn = require("../config/conexao_banco.js")
 
 module.exports = {
-    // Login
-    // Função para válidar o login
-    login: (email, senha) => {
-        // Busca na lista de usuários, se tem aquele usuário com as informações que ele me passou.
-        // Find = faz uma busca
-        let logado = listaUsuarios.find((user) => user.email === email && user.senha === senha) || null
 
-        return logado
-    },
+// Login
+// callback = executa uma reposta
+login: (email, senha, callback) => {
+// Variável SQL que guarda a consulta desejada
+const sql = `
+    SELECT * FROM usuarios
+    WHERE email = ?
+    AND senha = ?`
+    // Valores que serão utilizados na consulta
+        const valores = [email, senha]
 
-    // CRUD
-    // Fumção para cadastrar um novo usuario
-    salvar: ({ usuario, email, senha, tipo }) => {
-        const novoUsuario = {
-            id: listaUsuarios.length + 1,
-            usuario,
-            email,
-            senha,
-            tipo
-        }
-        listaUsuarios.push(novoUsuario)
-        console.log("Novo usuário salvo: ", novoUsuario);
-        return novoUsuario
-    },
-    // Buscar todos os usuarios do banco
-    listarTodos: () => {
-        return listaUsuarios
-    },
-    // Buscar um usuario especifico do banco
-    buscarPorId: (id) => {
-        return listaUsuarios.find((user) => user.id == id || null)
-    },
+// Executar o comando no banco
+conn.query(sql, valores, (erro, resultados) => {
+// Lidar com o erro
+if(erro){
+    return callback( erro, null)
+}
+// Retornar um resultado para o controller
+callback(null, resultados[0] || null)
+})
 
-    atualizar: (id, { usuario, email, senha, tipo }) => {
-        // Busca na lista de usuarios, um usuario com aquele id especifico, se achar, pega o index dele e guarda na variavel index
-        const index = listaUsuarios.findIndex((user) => user.id == id)
+},
 
-        // Se não achar, significa que um usuario com aquele index não existe
-        if (index === -1) return null;
-        listaUsuarios[index] = {
-            ...listaUsuarios[index],
-            usuario: usuario || listaUsuarios[index].usuario,
-            email: email || listaUsuarios[index].email,
-            senha: senha || listaUsuarios[index].senha,
-            tipo: tipo || listaUsuarios[index].tipo,
-        };
-        // Retornar o usuario atualizado
-        return listaUsuarios[index]
-    },
+// Criar = CREATE
+salvar: ({ usuario, email, senha, tipo }, callback ) => {
+// Variável SQL que guarda a consulta desejada
+const sql = `
+    INSERT INTO usuarios (usuario, email, senha, tipo)
+    VALUES (?, ?, ?, ?)
+`
 
-    deletar: (id) => {
-        const index = listaUsuarios.findIndex((user) => user.id == id)
-        if (index === -1) return false;
-        listaUsuarios.splice(index, 1);
-        return true
-    },
+// Valores que serão utilizados na consulta
+        const valores = [usuario, email, senha, tipo]
+
+ // Executar o comando no banco
+ conn.query(sql, valores, (erro, resultado) => {
+if(erro){
+    return callback (erro, null)
+}
+// Objeto com as informações que o usuário inseriu no banco
+const novoUsuario = {id: resultado.insertId , usuario, email, senha, tipo}
+
+callback(null, novoUsuario)
+ })
+},
+
+// Listar = READ
+listarTodods: (callback) => {
+    // Variável SQL que guarda a consulta desejada
+const sql = `SELECT * FROM usuarios`
+
+    // Executar o comando no banco
+conn.query(sql, (erro, resultados) => {
+    if(erro){
+        return callback(erro, null)
+    }
+    callback(null, resultados)
+})
+
+},
+
+// Atualizar = UPTADE
+// Buscar o usário
+buscarPorId: () => {
+
+},
+// Atualizar informações
+atualizar: () => {
+
+},
+// Excluir = DELETAR
+deletar: (id, callback) => {
+// Variável SQL que guarda a consulta desejada
+const sql = `DELETE FROM usuarios
+            WHERE id = ?`
+
+// Variavel com  informação oculta
+const valor = [id]
+
+// Executar o comando no banco
+conn.query(sql, valor, (erro, resultado) => {
+ if(erro){
+        return callback(erro, null)
+    }
+    callback(null, resultado.affectedRows > 0)
+})
+}
 }
