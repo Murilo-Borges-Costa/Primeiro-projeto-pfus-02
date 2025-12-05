@@ -3,83 +3,66 @@ const path = require("path")
 
 // Importa tudo que tem no model
 const produtoModel = require("../models/produtoModel")
-
 module.exports = {
-    // CRUD
-    // Responde a requisição mostrando a vizualisação da tela de cadastro.
-    formCadastro: (req, res) => {
-        res.render("produtos/cadastroProdutos", { titulo: "Cadastro" })
-    },
+//   CRUD
+// Criar
+formCadastro: (req, res) => {
+// Renderizar a pagina de cadastro
+res.render("produtos/cadastroProdutos", {titulo: "Cadastro"})
+},
+salvarProduto: (req, res) => {
+// Criar um objeto com as informações da view
+const {nome, descricao, preco, quantidade, categoria, url} = req.body
 
-    salvarProduto: (req, res) => {
-        const { nome, descricao, preco, quantidade, categoria, url } = req.body
-        produtoModel.salvar({ nome, descricao, preco, quantidade, categoria, url }, (erro, produtoNovo) => {
-            ;
-            // NÃO TENHO CERTEZA SE É PRODUTO OU PRODUTOS e se o p é minusculo ou minusculo.
-            if (erro) {
-                return res.render("produtos/erroProdutos", {
-                    titulo: "erro", erro: "Erro ao salvar produtos",
-                });
-            }
-
-            res.render("produtos/confirmacaoProdutos", {
-                tipo: "cadastro",
-                titulo: "Cadastro confirmado",
-                produtoNovo
-            });
-        })
-    },
-
-    // Função para mostrar todos os usuarios.
-    listarProduto: (req, res) => {
-        // Guarda a lista de usuários, que o model mandou depois que buscou do banco
-        const produto = produtoModel.listarTodos();
-
-        // Mostra a tela de lista pra pessoa, mandando a váriavel como parametro
-        res.render("produtos/listaProduto", { produto, titulo: "Lista de produtos" });
-        // res.render("usuarios", {usuarios})
-    },
-
-    // Função para mostrar apenas um usuário.
-    buscarProduto: (req, res) => {
-        // Busca o id vindo de um url como parametro .
-        const id = req.params.id
-        // Guarda o usuario retornado, depois de busca pelo model.
-        const produto = produtoModel.buscarPorId(id)
-        // Se não achar, avisa que deu um erro.
-        if (!produto) {
-            return res.status(404).render("produtos/erroProduto", { titulo: "Produto não encontrado" })
+// Manda as informações pro model
+produtoModel.salvar({nome, descricao, preco, quantidade, categoria, url}, (erro, produtoNovo) => {
+// Se deu erro, redenriza a página de erro, mostrando a mensagem de erro
+    if(erro){
+        return res.status(500).render("produtos/erroProdutos",{
+            titulo:"Erro",
+            mensagem: "Erro ao salvar o produto"
         }
-        // Se achar, devolve as informações via json
-        res.render("Produtos/editarProduto", { titulo: "Editar", produto })
-    },
-    // Função para atualizar lista de usuários
-    atualizarProduto: (req, res) => {
-        // Busca o id vindo de um url como parametro .
-        const id = req.params.id
-        // Busca por novas informações para atualizar
-        const { nome, descricao, preco, quantidade, categoria, url } = req.body;
-        // 
-        const produtoAtualizado = produtoModel.atualizar(id, { nome, descricao, preco, quantidade, categoria, url })
+    )
+}
+    // Se deu certo, renderiza a página de confirmação
+    res.render("produtos/confirmacaoProdutos", {
+        titulo:"Cadastro confirmado",
+        tipo: "cadastro",
+        produtoNovo
+    })
+})
+},
 
-        // Se não achar avisa que deu erro.
-        if (!produtoAtualizado) {
-            return res.status(404).render("produtos/erroProduto", { titulo: "Erro", mensagem: "Não foi possivel atualizar" });
+// Read
+listarProduto: (req, res) => {
+// Acessar o model, e resgatar as informações
+produtoModel.listarTodods( (erro, produto) => {
+    // Se deu erro, redenriza a página de erro, mostrando a mensagem de erro
+    if(erro){
+        return res.status(500).render("produtos/erroProdutos",{
+            titulo:"Erro",
+            mensagem: "Erro ao listar o produto"
         }
-        // Se atualizar manda uma mensagem dizendo que deu certo
-        res.render("produtos/confirmacaoProdutos", { titulo: "Edicão confirmada", tipo: "edicao", produtoAtualizado })
-    },
-    // Função para deletar um usuário
-    deletarProduto: (req, res) => {
-        // Busca o id vindo da url como parametro
-        const id = req.params.id;
-        // Guarda o usuario deletado em uma variavel
-        const deletado = produtoModel.deletar(id);
-        // Se não achar avisa que deu erro
-        if (!deletado) {
-            return res.status(404).render("produtos/erroProduto", { titulo: "Erro", mensagem: "Não foi possivel deletar" });
-        }
-        // Se atualizar, manda uma mensagem dizendo que deu certo.
-        res.render("produtos/confirmacaoProdutos", { titulo: "Deletado", tipo: "deletar", deletado })
-    },
+    )
+}
+//  Se der certo, renderizar a página de lista de produtos
+res.render("produtos/listaProduto", {
+    titulo: "Lista de produto",
+    produto
+})
+})
+},
+
+// Update
+buscarProduto: () => {
+
+},
+atualizarProduto: () => {
+
+},
+
+// Deletar
+deletarProduto: () => {
+    
+}
 }

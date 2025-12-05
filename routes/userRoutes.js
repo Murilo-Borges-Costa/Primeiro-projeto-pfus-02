@@ -10,7 +10,7 @@ const userController = require ("../controllers/userControllers")
 
 // Login
 // Rota para solicitar a página de login
-roteador.get("/login", userController.formlogin)
+roteador.get("/login", userController.formLogin)
 // Rota para enviar dados na página de login
 roteador.post("/login", userController.loginUsuario)
 

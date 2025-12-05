@@ -43,7 +43,7 @@ app.use(express.static('public'))
 app.get("/home", (req,res) => {
     res.status(200)
     // Render = ele lê o texto, e traduz para que aparessa na tela.
-    res.render("index", { titulo: "Página inicial"})
+    res.render("login", { titulo: "login"})
 })
 
 //Um pokemom que eu escolhi vai aparecer na tela.
@@ -53,7 +53,7 @@ app.get("/home", (req,res) => {
 
 //Você esta fazendo um requirimento e uma resposta.
 app.get("/", (req,res) => {
-    res.status(200).render("index", { titulo: "Página inicial"})
+    res.status(200).render("login", { titulo: "login"})
 })
 
 //Abre a parte de erro caso algo dê errado usando o use

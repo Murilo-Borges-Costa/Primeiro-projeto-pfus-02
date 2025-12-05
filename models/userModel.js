@@ -66,12 +66,39 @@ conn.query(sql, (erro, resultados) => {
 
 // Atualizar = UPTADE
 // Buscar o usário
-buscarPorId: () => {
+buscarPorId: (id, callback) => {
+  // Variável SQL que guarda a consulta desejada
+    const sql = `
+    SELECT * FROM usuarios
+    WHERE id = ?`
 
+    // Variável com informação oculta
+    const valor = [id]
+    // Executar o comando no banco
+    conn.query(sql, valor, (erro, resultados) => {
+         if(erro){
+        return callback(erro, null)
+    }
+    callback(null, resultados[0] || null)
+    })
 },
 // Atualizar informações
-atualizar: () => {
-
+atualizar: (id, {usuario, email, senha, tipo}, callback) => {
+// Variável SQL que guarda a consulta desejada
+const sql = `
+UPDATE usuarios
+SET usuario = ?, email = ?, senha = ?, tipo = ?
+WHERE id = ?
+`
+// Variável com informação oculta
+const valores = [usuario, email, senha, tipo, id]
+// Executar o comando no banco
+conn.query(sql, valores, (erro, resultado) => {
+ if(erro){
+        return callback(erro, null)
+    }
+    callback(null, resultado.affectedRows > 0)
+})
 },
 // Excluir = DELETAR
 deletar: (id, callback) => {
