@@ -92,12 +92,17 @@ WHERE id = ?
 `
 // Variável com informação oculta
 const valores = [usuario, email, senha, tipo, id]
+
+// Criar um objeto, pra retornar pro objeto
+const atualizado = {
+    usuario: valores[0]
+}
 // Executar o comando no banco
 conn.query(sql, valores, (erro, resultado) => {
  if(erro){
         return callback(erro, null)
     }
-    callback(null, resultado.affectedRows > 0)
+    callback(null, atualizado)
 })
 },
 // Excluir = DELETAR

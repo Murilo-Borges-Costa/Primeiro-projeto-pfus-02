@@ -89,15 +89,71 @@ res.render("usuarios/listaUsuarios",{
 },
 
 // Update
-buscarUsuario: () => {
+buscarUsuario: (req, res) => {
+// Busca o id vindo como parametro da url
+    const id = req.params.id
 
+    // Acessaro model para realizar a busca
+    userModel.buscarPorId(id, (erro, usuario) => {
+      // Se deu erro na busca, informa o erro
+      // Ou se não achou o usuario
+      if(erro || !usuario){
+        return res.status(500).render("usuarios/erroUsuario", {
+          titulo: "Erro",
+          mensagem: "Erro ao buscar o usuário"
+        })
+      }
+      // Se encontrou, renderiza a página de edição
+      res.render("usuarios/editarUsuarios", { titulo: "Edição", usuario})
+    })
 },
-atualizarUsuario: () => {
+atualizarUsuario: (req, res) => {
+// Busca o id vindo como parametro da url
+    const id = req.params.id
 
+// Criar um objeto com as informações da view
+    const {usuario, email, senha, tipo} = req.body
+
+// Acessar o model, e atualizar o usuario
+    userModel.atualizar(id, {usuario, email, senha, tipo}, (erro, atualizado) => {
+      // Se deu erro na atualização, informa o erro
+      // Ou se não achou o usuario
+      if(erro){
+        return res.status(500).render("usuarios/erroUsuario", {
+          titulo: "Erro",
+          mensagem: "Erro ao aualizar o usuário"
+        })
+      }
+      const usuarioAtualizado = atualizado
+       res.render("usuarios/confirmacaoUsuarios", {
+        tipo: "edicao",
+        titulo: "Edição confirmada",
+        usuarioAtualizado
+       })
+    })
 },
 
 // Deletar
-deletarUsuario: () => {
-
+deletarUsuario: (req, res) => {
+  // Busca o id vindo como parametro da url
+    const id = req.params.id
+    // Acessar o model e solicitar a exclusão do usuário
+    userModel.deletar(id, (erro, sucesso) => {
+      // Se deu erro ao deletar, informa o erro
+      // Ou se não conseguil
+      if(erro || !sucesso){
+        return res.status(500).render("usuarios/erroUsuario", {
+          titulo: "Erro",
+          mensagem: "Erro ao deletar o usuário"
+        })
+      }
+      const deletado = {usuario: "selecionado"}
+      // Renderizar a tela de sucesso
+      res.render("usuarios/confirmacaoUsuarios", {
+        tipo: "excluir",
+        titulo: "Usuário deletado",
+        deletado
+      })
+    })
 }
 }

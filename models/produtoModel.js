@@ -69,12 +69,16 @@ WHERE id = ?
 `
 // Variável com informação oculta
 const valores = [nome, descricao, preco, quantidade, categoria, url, id]
+
+const atualizado = {
+    produtos: valores[0]
+}
 // Executar o comando no banco
 conn.query(sql, valores, (erro, resultado) => {
  if(erro){
         return callback(erro, null)
     }
-    callback(null, resultado.affectedRows > 0)
+    callback(null, atualizado)
 })
 },
 // Excluir = DELETAR
