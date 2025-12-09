@@ -23,7 +23,10 @@ module.exports = {
                     mensagem: "Erro ao salvar o produto"
                 }
                 )
+                
+                
             }
+            
             // Se deu certo, renderiza a página de confirmação
             res.render("produtos/confirmacaoProdutos", {
                 titulo: "Cadastro confirmado",

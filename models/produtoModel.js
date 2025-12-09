@@ -8,7 +8,7 @@ salvar: ({ nome, descricao, preco, quantidade, categoria, url }, callback ) => {
 // Variável SQL que guarda a consulta desejada
 const sql = `
     INSERT INTO produtos (nome, descricao, preco, quantidade, categoria, url)
-    VALUES (?, ?, ?, ?, ?, ?)'
+    VALUES (?, ?, ?, ?, ?, ?)
 `
 
 // Valores que serão utilizados na consulta
@@ -17,6 +17,8 @@ const sql = `
  // Executar o comando no banco
  conn.query(sql, valores, (erro, resultado) => {
 if(erro){
+    console.log(erro);
+    
     return callback (erro, null)
 }
 // Objeto com as informações que o usuário inseriu no banco
